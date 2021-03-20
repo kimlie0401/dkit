@@ -59,7 +59,7 @@ const login = async (req: Request, res: Response) => {
       return res.status(401).json({ password: "Password is incorrect" });
     }
 
-    const token = jwt.sign({ username }, process.env.JWT_SECRET);
+    const token = jwt.sign({ username }, process.env.JWT_SECRET!);
 
     res.set(
       "Set-Cookie",
@@ -75,6 +75,7 @@ const login = async (req: Request, res: Response) => {
     return res.json(user);
   } catch (err) {
     console.log(err);
+    return res.json({ error: "Something went wrong" });
   }
 };
 
