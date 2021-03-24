@@ -7,6 +7,7 @@ import {
   JoinColumn,
   OneToMany,
 } from "typeorm";
+import { Expose } from "class-transformer";
 
 import Entities from "./Entity";
 import User from "./User";
@@ -38,6 +39,9 @@ export default class Post extends Entities {
   @Column()
   subName: string;
 
+  @Column()
+  username: string;
+
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
@@ -48,6 +52,16 @@ export default class Post extends Entities {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
+
+  @Expose() get url(): string {
+    return `/r/${this.subName}/${this.identifier}/${this.slug}`;
+  }
+
+  // protected url: string;
+  // @AfterLoad()
+  // createField() {
+  //   this.url = `/r/${this.subName}/${this.identifier}/${this.slug}`;
+  // }
 
   @BeforeInsert()
   makeIdAndSlug() {

@@ -4,12 +4,13 @@ import Link from "next/link";
 import Axios from "axios";
 import { useRouter } from "next/router";
 
-import InputGroup from "../components/inputGroup";
+import InputGroup from "../components/InputGroup";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [agreement, setAgreement] = useState(false);
   const [errors, setErrors] = useState<any>({});
 
@@ -20,6 +21,22 @@ export default function Register() {
 
     if (!agreement) {
       setErrors({ ...errors, agreement: "You must agree to T&Cs" });
+      return;
+    }
+
+    if (confirmPassword === "") {
+      setErrors({
+        ...errors,
+        confirmPassword: "Repeat password must not be empty",
+      });
+      return;
+    }
+
+    if (confirmPassword !== password) {
+      setErrors({
+        ...errors,
+        confirmPassword: "Passwords must match",
+      });
       return;
     }
 
@@ -39,13 +56,13 @@ export default function Register() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex bg-white">
       <Head>
         <title>Register</title>
       </Head>
 
       <div
-        className="h-screen bg-center bg-cover w-36"
+        className="h-screen bg-center bg-cover md:w-36 sm:w-20"
         style={{ backgroundImage: "url('/images/bricks.jpeg')" }}
       ></div>
       <div className="flex flex-col justify-center pl-6">
@@ -87,12 +104,20 @@ export default function Register() {
               error={errors.username}
             />
             <InputGroup
-              className="mb-4"
+              className="mb-2"
               type="password"
               value={password}
               setValue={setPassword}
               placeholder="Password"
               error={errors.password}
+            />
+            <InputGroup
+              className="mb-4"
+              type="password"
+              value={confirmPassword}
+              setValue={setConfirmPassword}
+              placeholder="Confirm Password"
+              error={errors.confirmPassword}
             />
             <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border-blue-500 rounded">
               Sign Up

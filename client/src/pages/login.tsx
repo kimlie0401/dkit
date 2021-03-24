@@ -4,7 +4,7 @@ import Link from "next/link";
 import Axios from "axios";
 import { useRouter } from "next/router";
 
-import InputGroup from "../components/inputGroup";
+import InputGroup from "../components/InputGroup";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -31,13 +31,13 @@ export default function Register() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex bg-white">
       <Head>
         <title>Login</title>
       </Head>
 
       <div
-        className="h-screen bg-center bg-cover w-36"
+        className="h-screen bg-center bg-cover md:w-36 sm:w-20"
         style={{ backgroundImage: "url('/images/bricks.jpeg')" }}
       ></div>
       <div className="flex flex-col justify-center pl-6">
