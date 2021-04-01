@@ -51,7 +51,7 @@ export default function PostCard({
   return (
     <div key={identifier} className="flex mb-4 bg-white rounded">
       {/* Vote section */}
-      <div className="w-10 py-3 text-center bg-gray-200 rounded-l">
+      <div className="hidden w-10 py-3 text-center bg-gray-200 rounded-l sm:block">
         {/* Upvote */}
         <div
           className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500"
@@ -86,7 +86,7 @@ export default function PostCard({
             />
           </Link>
           <Link href={`/r/${subName}`}>
-            <a className="font-bold text-sx hover:underline">/r/{subName}</a>
+            <a className="text-xs font-bold hover:underline">/r/{subName}</a>
           </Link>
           <p className="text-xs text-gray-500">
             <span className="mx-1">•</span>
@@ -106,6 +106,28 @@ export default function PostCard({
         </Link>
         {body && <p className="my-1 text-sm">{body}</p>}
         <div className="flex">
+          <div
+            className="text-gray-400 rounded cursor-pointer sm:hidden hover:bg-gray-300 hover:text-red-500"
+            onClick={() => vote(1)}
+          >
+            <i
+              className={classNames("m-1 icon-arrow-up fa-xs", {
+                "text-red-500": userVote === 1,
+              })}
+            ></i>
+          </div>
+          <p className="m-1 text-xs font-bold sm:hidden">{voteScore}</p>
+          {/* Downvote */}
+          <div
+            className="mr-2 text-gray-400 rounded cursor-pointer sm:hidden hover:bg-gray-300 hover:text-blue-600"
+            onClick={() => vote(-1)}
+          >
+            <i
+              className={classNames("m-1 icon-arrow-down fa-xs", {
+                "text-blue-600": userVote === -1,
+              })}
+            ></i>
+          </div>
           <Link href={url}>
             <a>
               <ActionButton>

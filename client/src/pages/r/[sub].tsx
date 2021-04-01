@@ -126,7 +126,9 @@ export default function SubPage() {
                 </div>
                 <div className="pt-1 pl-24">
                   <div className="flex items-center">
-                    <h1 className="mb-1 text-2xl font-bold">{sub.title}</h1>
+                    <h1 className="mb-1 text-lg font-bold sm:text-2xl">
+                      {sub.title}
+                    </h1>
                   </div>
                   <p className="text-sm font-bold text-gray-500">
                     /r/{sub.name}
@@ -137,7 +139,9 @@ export default function SubPage() {
           </div>
           {/* Posts & Sidebar */}
           <div className="container flex pt-5">
-            {sub && <div className="w-160">{postsMarkup}</div>}
+            {sub && (
+              <div className="w-full px-4 md:w-160 md:px-0">{postsMarkup}</div>
+            )}
           </div>
         </Fragment>
       )}
