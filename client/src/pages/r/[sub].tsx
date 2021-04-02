@@ -15,6 +15,7 @@ import classNames from "classnames";
 import { Sub } from "../../types";
 import { useAuthState } from "../../context/auth";
 import Axios from "axios";
+import Sidebar from "../../components/Sidebar";
 
 export default function SubPage() {
   // Local state
@@ -110,7 +111,7 @@ export default function SubPage() {
               )}
             </div>
             {/* Sub meta data */}
-            <div className="h-20 bg-white">
+            <div className="h-20 bg-white shadow-md">
               <div className="container relative flex">
                 <div className="absolute" style={{ top: -15 }}>
                   <Image
@@ -142,6 +143,7 @@ export default function SubPage() {
             {sub && (
               <div className="w-full px-4 md:w-160 md:px-0">{postsMarkup}</div>
             )}
+            <Sidebar sub={sub} />
           </div>
         </Fragment>
       )}

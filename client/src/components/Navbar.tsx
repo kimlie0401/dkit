@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div ref={inputRef}>
-      <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-12 px-5 bg-white">
+      <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-12 px-5 bg-white shadow-md">
         <div className="flex items-center">
           <Link href="/">
             <a>
@@ -164,7 +164,7 @@ const Navbar: React.FC = () => {
             ))}
         </div> */}
         <div className="sm:hidden">
-          <div className="fixed inset-x-0 z-10 flex-col items-center justify-center p-2 bg-gray-100 top-12">
+          <div className="fixed inset-x-0 z-10 flex-col items-center justify-center p-2 bg-white border-t shadow-md top-12">
             <div className="max-w-full px-4 my-2 w-160">
               <div className="flex items-center bg-gray-100 border rounded hover:border-blue-500 hover:bg-white ">
                 <i className="pl-4 pr-3 text-gray-500 fas fa-search"></i>

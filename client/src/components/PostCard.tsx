@@ -49,7 +49,7 @@ export default function PostCard({
   };
 
   return (
-    <div key={identifier} className="flex mb-4 bg-white rounded">
+    <div key={identifier} className="flex mb-4 bg-white rounded shadow-md">
       {/* Vote section */}
       <div className="hidden w-10 py-3 text-center bg-gray-200 rounded-l sm:block">
         {/* Upvote */}
