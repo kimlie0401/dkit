@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import useSWR from "swr";
@@ -50,17 +50,19 @@ export default function Home() {
                 >
                   <div className="mr-2 cursor-pointer">
                     <Link href={`/r/${sub.name}`}>
-                      <Image
-                        className="rounded-full"
-                        src={sub.imageUrl}
-                        alt="Sub"
-                        width={(6 * 16) / 4}
-                        height={(6 * 16) / 4}
-                      />
+                      <a>
+                        <Image
+                          className="rounded-full"
+                          src={sub.imageUrl}
+                          alt="Sub"
+                          width={(6 * 16) / 4}
+                          height={(6 * 16) / 4}
+                        />
+                      </a>
                     </Link>
                   </div>
                   <Link href={`/r/${sub.name}`}>
-                    <a href="" className="font-bold hover:cursor-pointer">
+                    <a className="font-bold hover:cursor-pointer">
                       /r/{sub.name}
                     </a>
                   </Link>

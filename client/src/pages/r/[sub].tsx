@@ -26,6 +26,7 @@ export default function SubPage() {
   const router = useRouter();
   const fileInputRef = createRef<HTMLInputElement>();
 
+  console.log(router.query);
   const subName = router.query.sub;
 
   const { data: sub, error, revalidate } = useSWR<Sub>(
