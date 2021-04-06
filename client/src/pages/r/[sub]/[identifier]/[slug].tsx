@@ -250,7 +250,10 @@ export default function PostPage() {
                 <hr />
                 {/* Commnets feed */}
                 {comments?.map((comment) => (
-                  <div className="flex p-2 sm:p-0" key={comment.identifier}>
+                  <div
+                    className="flex p-2 border-b sm:p-0 sm:border-none"
+                    key={comment.identifier}
+                  >
                     {/* Vote section */}
                     <div className="flex-shrink-0 hidden w-10 py-2 text-center rounded-l sm:block">
                       {/* Upvote */}
@@ -277,7 +280,7 @@ export default function PostPage() {
                         ></i>
                       </div>
                     </div>
-                    <div className="py-2 pr-2">
+                    <div className="py-0 pr-2 sm:py-2">
                       <p className="mb-1 text-xs leading-none">
                         <Link href={`/u/${comment.username}`}>
                           <a className="mr-1 font-bold hover:underline">
@@ -292,7 +295,7 @@ export default function PostPage() {
                         </span>
                       </p>
                       <p>{comment.body}</p>
-                      <div className="flex mt-2 sm:hidden">
+                      <div className="flex mt-1 sm:hidden">
                         <div
                           className="text-gray-400 rounded cursor-pointer sm:hidden hover:bg-gray-300 hover:text-red-500"
                           onClick={() => vote(1, comment)}

@@ -27,7 +27,7 @@ export default function Home() {
       <Head>
         <title>Dkit: the front page of the internet</title>
       </Head>
-      <div className="container flex pt-4">
+      <div className="container flex flex-col pt-4 md:flex-row">
         {/* Post feed */}
         <div className="w-full px-2 md:w-160 md:px-0">
           {posts?.map((post) => (
@@ -35,7 +35,7 @@ export default function Home() {
           ))}
         </div>
         {/* Sidebar */}
-        <div className="hidden ml-6 md:block w-80">
+        <div className="order-first w-full px-2 mb-6 md:px-0 md:ml-6 md:order-last md:w-80">
           <div className="bg-white rounded shadow-md">
             <div className="p-4 border-b-2">
               <p className="text-lg font-semibold text-center">
@@ -48,21 +48,20 @@ export default function Home() {
                   className="flex items-center px-4 py-2 text-xs border-b"
                   key={sub.name}
                 >
-                  <div className="mr-2 cursor-pointer">
-                    <Link href={`/r/${sub.name}`}>
-                      <a>
-                        <Image
-                          className="rounded-full"
-                          src={sub.imageUrl}
-                          alt="Sub"
-                          width={(6 * 16) / 4}
-                          height={(6 * 16) / 4}
-                        />
-                      </a>
-                    </Link>
-                  </div>
                   <Link href={`/r/${sub.name}`}>
-                    <a className="font-bold hover:cursor-pointer">
+                    <a>
+                      <Image
+                        className="rounded-full cursor-pointer"
+                        src={sub.imageUrl}
+                        alt="Sub"
+                        width={(6 * 16) / 4}
+                        height={(6 * 16) / 4}
+                      />
+                    </a>
+                  </Link>
+
+                  <Link href={`/r/${sub.name}`}>
+                    <a className="ml-2 font-bold hover:cursor-pointer">
                       /r/{sub.name}
                     </a>
                   </Link>
