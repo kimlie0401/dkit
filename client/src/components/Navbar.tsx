@@ -55,6 +55,7 @@ const Navbar: React.FC = () => {
   const goToSub = (subName: string) => {
     router.push(`/r/${subName}`);
     setName("");
+    setButtonToggle(false);
   };
 
   const [buttonToggle, setButtonToggle] = useState(false);
@@ -245,7 +246,7 @@ const Navbar: React.FC = () => {
                   {subs?.map((sub) => (
                     <div
                       key={sub.title}
-                      className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200"
+                      className="flex items-center px-4 py-3 border-b cursor-pointer hover:bg-gray-200"
                       onClick={() => goToSub(sub.name)}
                     >
                       <Image
