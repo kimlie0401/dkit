@@ -29,9 +29,9 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    if (name.trim() === "") {
+    if (name.trim().length === 0) {
+      clearTimeout(timer);
       setSubs([]);
-      setName("");
       return;
     }
     searchSubs();
@@ -44,7 +44,6 @@ const Navbar: React.FC = () => {
         try {
           const { data } = await Axios.get(`/subs/search/${name}`);
           setSubs(data);
-          console.log(data);
         } catch (err) {
           console.log(err);
         }
