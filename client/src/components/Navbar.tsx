@@ -6,10 +6,18 @@ import { Transition } from "@headlessui/react";
 import { useAuthState, useAuthDispatch } from "../context/auth";
 
 import DkitLogo from "../images/dkit.svg";
+import { Sub } from "../types";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Navbar: React.FC = () => {
+  const [name, setName] = useState("");
+  const [subs, setSubs] = useState<Sub[]>([]);
+  const [timer, setTimer] = useState(null);
   const { authenticated, loading } = useAuthState();
   const dispatch = useAuthDispatch();
+
+  const router = useRouter();
 
   const logout = () => {
     Axios.get("/auth/logout")
@@ -18,6 +26,35 @@ const Navbar: React.FC = () => {
         window.location.reload();
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    if (name.trim() === "") {
+      setSubs([]);
+      setName("");
+      return;
+    }
+    searchSubs();
+  }, [name]);
+
+  const searchSubs = async () => {
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(async () => {
+        try {
+          const { data } = await Axios.get(`/subs/search/${name}`);
+          setSubs(data);
+          console.log(data);
+        } catch (err) {
+          console.log(err);
+        }
+      }, 250)
+    );
+  };
+
+  const goToSub = (subName: string) => {
+    router.push(`/r/${subName}`);
+    setName("");
   };
 
   const [buttonToggle, setButtonToggle] = useState(false);
@@ -60,13 +97,39 @@ const Navbar: React.FC = () => {
           </span>
         </div>
         <div className="hidden max-w-full px-4 w-160 sm:block">
-          <div className="flex items-center bg-gray-100 border rounded hover:border-blue-500 hover:bg-white ">
+          <div className="relative flex items-center bg-gray-100 border rounded hover:border-blue-500 hover:bg-white ">
             <i className="pl-4 pr-3 text-gray-500 fas fa-search"></i>
             <input
               type="text"
-              className="py-1 pr-3 bg-transparent rounded focus:outline-none"
+              className="w-full py-1 pr-3 bg-transparent rounded focus:outline-none"
               placeholder="Search"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
+            <div
+              className="absolute left-0 right-0 bg-white"
+              style={{ top: "100%" }}
+            >
+              {subs?.map((sub) => (
+                <div
+                  key={sub.title}
+                  className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200"
+                  onClick={() => goToSub(sub.name)}
+                >
+                  <Image
+                    className="rounded-full"
+                    src={sub.imageUrl}
+                    alt="Sub"
+                    height={(8 * 16) / 4}
+                    width={(8 * 16) / 4}
+                  />
+                  <div className="ml-4 text-sm">
+                    <p className="font-medium">{sub.name}</p>
+                    <p className="text-gray-600">{sub.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         {/* Auth buttons */}
@@ -166,13 +229,39 @@ const Navbar: React.FC = () => {
         <div className="sm:hidden">
           <div className="fixed inset-x-0 z-10 flex-col items-center justify-center p-2 bg-white border-t shadow-md top-12">
             <div className="max-w-full px-4 my-2 w-160">
-              <div className="flex items-center bg-gray-100 border rounded hover:border-blue-500 hover:bg-white ">
+              <div className="relative flex items-center bg-gray-100 border rounded hover:border-blue-500 hover:bg-white ">
                 <i className="pl-4 pr-3 text-gray-500 fas fa-search"></i>
                 <input
                   type="text"
                   className="py-1 pr-3 bg-transparent rounded focus:outline-none"
                   placeholder="Search"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
+                <div
+                  className="absolute left-0 right-0 bg-white"
+                  style={{ top: "100%" }}
+                >
+                  {subs?.map((sub) => (
+                    <div
+                      key={sub.title}
+                      className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200"
+                      onClick={() => goToSub(sub.name)}
+                    >
+                      <Image
+                        className="rounded-full"
+                        src={sub.imageUrl}
+                        alt="Sub"
+                        height={(8 * 16) / 4}
+                        width={(8 * 16) / 4}
+                      />
+                      <div className="ml-4 text-sm">
+                        <p className="font-medium">{sub.name}</p>
+                        <p className="text-gray-600">{sub.title}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             {!loading &&

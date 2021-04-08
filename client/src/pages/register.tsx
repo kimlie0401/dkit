@@ -27,6 +27,29 @@ export default function Register() {
       setErrors({ ...errors, agreement: "You must agree to T&Cs" });
       return;
     }
+    if (email.trim().length === 0) {
+      setErrors({
+        ...errors,
+        email: "Email is empty",
+      });
+      return;
+    }
+
+    if (username.trim().length < 3) {
+      setErrors({
+        ...errors,
+        username: "Must be at least 3 characters long",
+      });
+      return;
+    }
+
+    if (password === "") {
+      setErrors({
+        ...errors,
+        password: "Password must not be empty",
+      });
+      return;
+    }
 
     if (confirmPassword === "") {
       setErrors({
