@@ -6,14 +6,14 @@ import useSWR from "swr";
 import Image from "next/image";
 
 import PostCard from "../components/PostCard";
-import { Sub } from "../types";
+import { Post, Sub } from "../types";
 import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
 export default function Home() {
-  const { data: posts } = useSWR("/posts");
-  const { data: topSubs } = useSWR("/misc/top-subs");
+  const { data: posts } = useSWR<Post[]>("/posts");
+  const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
   // const [posts, setPosts] = useState<Post[]>([]);
 
   // useEffect(() => {
@@ -43,7 +43,7 @@ export default function Home() {
               </p>
             </div>
             <div>
-              {topSubs?.map((sub: Sub) => (
+              {topSubs?.map((sub) => (
                 <div
                   className="flex items-center px-4 py-2 text-xs border-b"
                   key={sub.name}

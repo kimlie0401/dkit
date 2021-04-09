@@ -1,3 +1,6 @@
+import Inko from "inko";
+
+const inko = new Inko();
 // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
 export function makeId(length: number): string {
   let result = "";
@@ -12,6 +15,11 @@ export function makeId(length: number): string {
 
 // https://gist.github.com/codeguy/6684588#gistcomment-2759673
 export function slugify(str: string): string {
+  let check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  if (check_kor.test(str)) {
+    str = inko.ko2en(str);
+  }
+
   str = str.trim();
   str = str.toLowerCase();
 

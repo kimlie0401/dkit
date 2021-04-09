@@ -40,12 +40,11 @@ export default function PostCard({
     // If vote is the same reset vote
     if (value === userVote) value = 0;
     try {
-      const res = await Axios.post("/misc/vote", {
+      await Axios.post("/misc/vote", {
         identifier,
         slug,
         value,
       });
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
