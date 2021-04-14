@@ -8,12 +8,15 @@ import Image from "next/image";
 import PostCard from "../components/PostCard";
 import { Post, Sub } from "../types";
 import Link from "next/link";
+import { useAuthState } from "../context/auth";
 
 dayjs.extend(relativeTime);
 
 export default function Home() {
   const { data: posts } = useSWR<Post[]>("/posts");
   const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
+
+  const { authenticated } = useAuthState();
   // const [posts, setPosts] = useState<Post[]>([]);
 
   // useEffect(() => {
@@ -69,6 +72,15 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            {authenticated && (
+              <div className="p-4 border-t-2">
+                <Link href="/subs/create">
+                  <a className="w-full px-2 py-1 blue button">
+                    Create Community
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
