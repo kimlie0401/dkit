@@ -32,7 +32,7 @@ app.use(
 );
 app.use(express.static("public")); // can connect to public folder
 
-app.get("/", (_, res) => res.send("Hello World"));
+app.get("/api", (_, res) => res.send("Hello World"));
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/subs", subRoutes);
