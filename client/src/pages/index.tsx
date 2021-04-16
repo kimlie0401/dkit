@@ -9,6 +9,7 @@ import PostCard from "../components/PostCard";
 import { Post, Sub } from "../types";
 import Link from "next/link";
 import { useAuthState } from "../context/auth";
+import Loader from "../components/Loader";
 
 dayjs.extend(relativeTime);
 
@@ -28,7 +29,9 @@ export default function Home() {
     setSize: setPage,
     isValidating,
     revalidate,
-  } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
+  } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`, {
+    revalidateAll: true,
+  });
 
   const posts: Post[] = data ? [].concat(...data) : [];
 
@@ -74,7 +77,7 @@ export default function Home() {
       <div className="container flex flex-col pt-4 md:flex-row">
         {/* Post feed */}
         <div className="w-full px-2 md:w-160 md:px-0">
-          {isValidating && <p className="text-lg text-center">Loading..</p>}
+          {isValidating && <Loader />}
           {posts?.map((post) => (
             <PostCard
               post={post}
@@ -82,9 +85,7 @@ export default function Home() {
               revalidate={revalidate}
             />
           ))}
-          {isValidating && posts.length > 0 && (
-            <p className="text-lg text-center">Loading More..</p>
-          )}
+          {isValidating && posts.length > 0 && <Loader />}
         </div>
         {/* Sidebar */}
         <div className="order-first w-full px-2 mb-6 md:px-0 md:ml-6 md:order-last md:w-80">
@@ -95,31 +96,35 @@ export default function Home() {
               </p>
             </div>
             <div>
-              {topSubs?.map((sub) => (
-                <div
-                  className="flex items-center px-4 py-2 text-xs border-b"
-                  key={sub.name}
-                >
-                  <Link href={`/r/${sub.name}`}>
-                    <a>
-                      <Image
-                        className="rounded-full cursor-pointer"
-                        src={sub.imageUrl}
-                        alt="Sub"
-                        width={(6 * 16) / 4}
-                        height={(6 * 16) / 4}
-                      />
-                    </a>
-                  </Link>
+              {topSubs ? (
+                topSubs?.map((sub) => (
+                  <div
+                    className="flex items-center px-4 py-2 text-xs border-b"
+                    key={sub.name}
+                  >
+                    <Link href={`/r/${sub.name}`}>
+                      <a>
+                        <Image
+                          className="rounded-full cursor-pointer"
+                          src={sub.imageUrl}
+                          alt="Sub"
+                          width={(6 * 16) / 4}
+                          height={(6 * 16) / 4}
+                        />
+                      </a>
+                    </Link>
 
-                  <Link href={`/r/${sub.name}`}>
-                    <a className="ml-2 font-bold hover:cursor-pointer">
-                      /r/{sub.name}
-                    </a>
-                  </Link>
-                  <p className="ml-auto font-medium">{sub.postCount}</p>
-                </div>
-              ))}
+                    <Link href={`/r/${sub.name}`}>
+                      <a className="ml-2 font-bold hover:cursor-pointer">
+                        /r/{sub.name}
+                      </a>
+                    </Link>
+                    <p className="ml-auto font-medium">{sub.postCount}</p>
+                  </div>
+                ))
+              ) : (
+                <Loader />
+              )}
             </div>
             {authenticated && (
               <div className="p-4 border-t-2">
