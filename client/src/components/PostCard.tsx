@@ -13,6 +13,7 @@ dayjs.extend(relativeTime);
 
 interface PostCardProps {
   post: Post;
+  revalidate?: Function;
 }
 
 export default function PostCard({
@@ -29,6 +30,7 @@ export default function PostCard({
     url,
     username,
   },
+  revalidate,
 }: PostCardProps) {
   const router = useRouter();
   const { authenticated } = useAuthState();
@@ -45,13 +47,18 @@ export default function PostCard({
         slug,
         value,
       });
+      if (revalidate) revalidate();
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div key={identifier} className="flex mb-4 bg-white rounded shadow-md">
+    <div
+      key={identifier}
+      className="flex mb-4 bg-white rounded shadow-md"
+      id={identifier}
+    >
       {/* Vote section */}
       <div className="hidden w-10 py-3 text-center bg-gray-200 rounded-l sm:block">
         {/* Upvote */}
