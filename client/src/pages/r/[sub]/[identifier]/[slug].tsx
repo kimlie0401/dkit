@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import classNames from "classnames";
 import useSWR from "swr";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import Axios from "axios";
 import Sidebar from "../../../../components/Sidebar";
@@ -19,6 +19,7 @@ dayjs.extend(relativeTime);
 export default function PostPage() {
   // Local state
   const [newComment, setNewComment] = useState("");
+  const [description, setDescription] = useState("");
   // Global state
   const { authenticated, user } = useAuthState();
 
@@ -26,7 +27,7 @@ export default function PostPage() {
   const router = useRouter();
   const { identifier, sub, slug } = router.query;
 
-  const { data: post, error } = useSWR<Post>(
+  const { data: post, error, revalidate: revalidatePost } = useSWR<Post>(
     identifier && slug ? `/posts/${identifier}/${slug}` : null
   );
 
@@ -35,6 +36,13 @@ export default function PostPage() {
   );
 
   if (error) router.push("/");
+
+  useEffect(() => {
+    if (!post) return;
+    let desc = post.body || post.title;
+    desc = desc.substring(0, 158).concat(".."); // Hello world..
+    setDescription(desc);
+  }, [post]);
 
   const vote = async (value: number, comment?: Comment) => {
     // If note logged in goto login
@@ -54,7 +62,8 @@ export default function PostPage() {
         commentIdentifier: comment?.identifier,
         value,
       });
-      revalidate();
+      if (!comment) revalidatePost();
+      if (comment) revalidate();
     } catch (err) {
       console.log(err);
     }
@@ -81,6 +90,11 @@ export default function PostPage() {
     <>
       <Head>
         <title>{post?.title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
+        <meta property="og:title" content={post?.title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:title" content={post?.title} />
       </Head>
       <Link href={`/r/${sub}`}>
         <a>
