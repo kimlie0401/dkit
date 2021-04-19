@@ -34,7 +34,7 @@ export default function submit() {
     }
   };
   return (
-    <div className="flex flex-col pt-5 ontainer md:flex-row">
+    <div className="container flex flex-col pt-5 md:flex-row">
       <Head>
         <title>Submit to Dkit</title>
       </Head>
