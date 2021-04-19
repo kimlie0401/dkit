@@ -141,7 +141,7 @@ export default function SubPage() {
           {/* Posts & Sidebar */}
           <div className="container flex flex-col pt-4 md:flex-row">
             {sub && (
-              <div className="w-full px-4 md:w-160 md:px-0">{postsMarkup}</div>
+              <div className="w-full px-2 md:w-160 md:px-0">{postsMarkup}</div>
             )}
             <Sidebar sub={sub} />
           </div>
