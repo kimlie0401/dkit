@@ -115,7 +115,7 @@ export default function PostPage() {
           </div>
         </a>
       </Link>
-      <div className="container flex pt-5">
+      <div className="flex flex-col pt-5 ontainer md:flex-row">
         {/* Post */}
         <div className="w-full px-2 md:w-160 md:px-0">
           <div className="bg-white rounded">
@@ -167,7 +167,9 @@ export default function PostPage() {
                     {/* Post title */}
                     <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                     {/* Post body */}
-                    <p className="my-3 text-sm">{post.body}</p>
+                    <p className="my-3 text-sm" style={{ whiteSpace: "pre" }}>
+                      {post.body}
+                    </p>
                     {/* Actions */}
                     <div className="flex">
                       <div

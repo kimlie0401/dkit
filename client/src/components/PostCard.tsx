@@ -123,7 +123,15 @@ export default function PostCard({
         <Link href={url}>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
-        {body && <p className="my-1 text-sm">{body}</p>}
+        {body && (
+          <p className="my-1 text-sm">
+            {body && (
+              <p className="my-1 text-sm">
+                {body.length > 100 ? `${body.substring(0, 100)}........` : body}
+              </p>
+            )}
+          </p>
+        )}
         <div className="flex">
           <div
             className="text-gray-400 rounded cursor-pointer sm:hidden hover:bg-gray-300 hover:text-red-500"

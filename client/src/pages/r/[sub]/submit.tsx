@@ -34,11 +34,11 @@ export default function submit() {
     }
   };
   return (
-    <div className="container flex pt-5">
+    <div className="flex flex-col pt-5 ontainer md:flex-row">
       <Head>
         <title>Submit to Dkit</title>
       </Head>
-      <div className="w-160">
+      <div className="w-full px-2 md:w-160 md:px-0">
         <div className="p-4 bg-white rounded shadow-md">
           <h1 className="mb-3 text-lg">Submit a post to /r/{subName}</h1>
           <form onSubmit={submitPost}>
