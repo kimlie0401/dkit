@@ -125,11 +125,7 @@ export default function PostCard({
         </Link>
         {body && (
           <p className="my-1 text-sm">
-            {body && (
-              <p className="my-1 text-sm">
-                {body.length > 100 ? `${body.substring(0, 100)}........` : body}
-              </p>
-            )}
+            {body.length > 100 ? `${body.substring(0, 100)}........` : body}
           </p>
         )}
         <div className="flex">
