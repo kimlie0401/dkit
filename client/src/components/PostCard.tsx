@@ -124,7 +124,7 @@ export default function PostCard({
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
         {body && (
-          <p className="my-1 text-sm">
+          <p className="my-1 text-sm whitespace-pre-line">
             {body.length > 100 ? `${body.substring(0, 100)}........` : body}
           </p>
         )}
