@@ -115,7 +115,7 @@ export default function PostPage() {
           </div>
         </a>
       </Link>
-      <div className="flex flex-col pt-5 ontainer md:flex-row">
+      <div className="container flex flex-col pt-5 md:flex-row">
         {/* Post */}
         <div className="w-full px-2 md:w-160 md:px-0">
           <div className="bg-white rounded">
