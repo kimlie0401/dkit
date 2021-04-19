@@ -17,18 +17,22 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <title>Dkit</title>
-          <link rel="icon" type="image/svg+xml" href="/dkit.svg" />
+          <link
+            rel="icon"
+            type="image/svg+xml"
+            href={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/dkit.svg`}
+          />
           <meta property="og:site_name" content="Dkit" />
           <meta property="twitter:site" content="@Dkit" />
           <meta property="twitter:card" content="summary" />
           <meta property="og:type" content="website" />
           <meta
             property="og:image"
-            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/dkit.svg`}
+            content={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/dkit.svg`}
           />
           <meta
             property="twitter:image"
-            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/dkit.svg`}
+            content={`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/images/dkit.svg`}
           />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
