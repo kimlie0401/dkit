@@ -167,7 +167,7 @@ export default function PostPage() {
                     {/* Post title */}
                     <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                     {/* Post body */}
-                    <p className="my-3 text-sm" style={{ whiteSpace: "pre" }}>
+                    <p className="my-3 text-sm whitespace-pre-line ">
                       {post.body}
                     </p>
                     {/* Actions */}
