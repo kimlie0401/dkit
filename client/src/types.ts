@@ -13,6 +13,7 @@ export interface Post {
   voteScore?: number;
   commentCount?: number;
   userVote?: number;
+  imageUrl?: string;
 }
 
 export interface User {

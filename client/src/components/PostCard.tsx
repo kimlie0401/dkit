@@ -30,6 +30,7 @@ export default function PostCard({
     url,
     username,
     sub,
+    imageUrl,
   },
   revalidate,
 }: PostCardProps) {
@@ -123,6 +124,9 @@ export default function PostCard({
         <Link href={url}>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
+        <div>
+          <img src={imageUrl} className="bg-contain" />
+        </div>
         {body && (
           <p className="my-1 text-sm whitespace-pre-line">
             {body.length > 100 ? `${body.substring(0, 100)}........` : body}

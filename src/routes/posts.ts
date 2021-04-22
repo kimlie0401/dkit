@@ -1,4 +1,6 @@
 import { Request, Response, Router } from "express";
+import multer, { FileFilterCallback } from "multer";
+import path from "path";
 
 import Comment from "../entities/Comment";
 import Post from "../entities/Post";
@@ -6,9 +8,31 @@ import Sub from "../entities/Sub";
 
 import auth from "../middleware/auth";
 import user from "../middleware/user";
+import { makeId } from "../util/helpers";
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: "public/images",
+    filename: (_, file, callback) => {
+      const name = makeId(15);
+      callback(null, name + path.extname(file.originalname)); // ex) sdfajskfl + .png
+    },
+  }),
+  fileFilter: (_, file: any, callback: FileFilterCallback) => {
+    if (
+      file.mimetype == "image/jpeg" ||
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/gif"
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not an image"));
+    }
+  },
+});
 
 const createPost = async (req: Request, res: Response) => {
-  const { title, body, sub } = req.body;
+  const { title, body, sub, type } = req.body;
 
   const user = res.locals.user;
 
@@ -21,6 +45,11 @@ const createPost = async (req: Request, res: Response) => {
     const subRecord = await Sub.findOneOrFail({ name: sub });
 
     const post = new Post({ title, body, user, sub: subRecord });
+
+    if (type === "image") {
+      post.imageUrn = req.file.filename;
+    }
+
     await post.save();
 
     return res.json(post);
@@ -29,6 +58,29 @@ const createPost = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+// const createPost = async (req: Request, res: Response) => {
+//   const { title, body, sub } = req.body;
+
+//   const user = res.locals.user;
+
+//   if (title.trim() === "") {
+//     return res.status(400).json({ title: "Title must not be empty" });
+//   }
+
+//   try {
+//     // find sub
+//     const subRecord = await Sub.findOneOrFail({ name: sub });
+
+//     const post = new Post({ title, body, user, sub: subRecord });
+//     await post.save();
+
+//     return res.json(post);
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).json({ error: "Something went wrong" });
+//   }
+// };
 
 const getPosts = async (req: Request, res: Response) => {
   const currentPage: number = (req.query.page || 0) as number;
@@ -120,7 +172,7 @@ const getPostComments = async (req: Request, res: Response) => {
 
 const router = Router();
 
-router.post("/", user, auth, createPost);
+router.post("/", user, auth, upload.single("file"), createPost);
 router.get("/", user, getPosts);
 router.get("/:identifier/:slug", user, getPost);
 router.post("/:identifier/:slug/comments", user, auth, commentOnPost);

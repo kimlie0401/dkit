@@ -166,6 +166,10 @@ export default function PostPage() {
                     </div>
                     {/* Post title */}
                     <h1 className="my-1 text-xl font-medium">{post.title}</h1>
+                    {/* Post Pic */}
+                    <div>
+                      <img src={post.imageUrl} className="bg-contain" />
+                    </div>
                     {/* Post body */}
                     <p className="my-3 text-sm whitespace-pre-line ">
                       {post.body}

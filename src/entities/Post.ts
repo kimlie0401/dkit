@@ -43,6 +43,9 @@ export default class Post extends Entities {
   @Column()
   username: string;
 
+  @Column({ nullable: true })
+  imageUrn: string;
+
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
@@ -81,5 +84,12 @@ export default class Post extends Entities {
   makeIdAndSlug() {
     this.identifier = makeId(7);
     this.slug = slugify(this.title);
+  }
+
+  @Expose()
+  get imageUrl(): string | undefined {
+    return this.imageUrn
+      ? `${process.env.APP_URL}/images/${this.imageUrn}`
+      : undefined;
   }
 }

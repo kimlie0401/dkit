@@ -13,6 +13,17 @@ export default function submit() {
   const router = useRouter();
   const { sub: subName } = router.query;
 
+  const [image, setImage] = useState({ preview: "", raw: "" });
+
+  const handleChange = (e) => {
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+      });
+    }
+  };
+
   const { data: sub, error } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
   if (error) router.push("/");
 
@@ -21,11 +32,20 @@ export default function submit() {
 
     if (title.trim() === "") return;
 
+    const formData = new FormData();
+    formData.append("file", image.raw);
+    if (image.raw !== "") {
+      formData.append("type", "image");
+    } else {
+      formData.append("type", "none");
+    }
+    formData.append("title", title.trim());
+    formData.append("body", body);
+    formData.append("sub", sub.name);
+
     try {
-      const { data: post } = await Axios.post<Post>("/posts", {
-        title: title.trim(),
-        body,
-        sub: sub.name,
+      const { data: post } = await Axios.post<Post>("/posts", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       router.push(`/r/${sub.name}/${post.identifier}/${post.slug}`);
@@ -65,7 +85,36 @@ export default function submit() {
               rows={4}
               onChange={(e) => setBody(e.target.value)}
             ></textarea>
-            <div className="flex justify-end">
+            <div>
+              <label
+                htmlFor="upload-button"
+                className="flex flex-col items-center mt-4"
+              >
+                {image.preview ? (
+                  <img
+                    src={image.preview}
+                    alt="dummy"
+                    width="300"
+                    height="300"
+                  />
+                ) : (
+                  <>
+                    <span className="mt-3 mb-2 text-blue-500 fa-stack fa-2x">
+                      <i className="fas fa-circle fa-stack-2x" />
+                      <i className="fas fa-store fa-stack-1x fa-inverse" />
+                    </span>
+                    <h5 className="text-gray-500">Choose your photo</h5>
+                  </>
+                )}
+              </label>
+              <input
+                type="file"
+                id="upload-button"
+                style={{ display: "none" }}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="flex justify-end mt-4">
               <button
                 className="px-3 py-1 blue button"
                 type="submit"
