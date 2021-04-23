@@ -88,7 +88,7 @@ export default function submit() {
             <div>
               <label
                 htmlFor="upload-button"
-                className="flex flex-col items-center mt-4"
+                className="flex flex-col items-center mt-4 "
               >
                 {image.preview ? (
                   <img
@@ -96,10 +96,11 @@ export default function submit() {
                     alt="dummy"
                     width="300"
                     height="300"
+                    className="cursor-pointer"
                   />
                 ) : (
                   <>
-                    <span className="mt-3 mb-2 text-blue-500 fa-stack fa-2x">
+                    <span className="mt-3 mb-2 text-blue-500 cursor-pointer fa-stack fa-2x">
                       <i className="fas fa-circle fa-stack-2x" />
                       <i className="fas fa-store fa-stack-1x fa-inverse" />
                     </span>
