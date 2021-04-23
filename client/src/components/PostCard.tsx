@@ -125,7 +125,7 @@ export default function PostCard({
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
         <div>
-          <img src={imageUrl} className="bg-contain" />
+          <img src={imageUrl} className="mx-auto" />
         </div>
         {body && (
           <p className="my-1 text-sm whitespace-pre-line">

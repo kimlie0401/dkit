@@ -148,7 +148,7 @@ export default function PostPage() {
                       ></i>
                     </div>
                   </div>
-                  <div className="py-2 pr-2">
+                  <div className="w-full py-2 pr-2">
                     <div className="flex items-center">
                       <p className="text-xs text-gray-500">
                         Posted by
@@ -168,7 +168,7 @@ export default function PostPage() {
                     <h1 className="my-1 text-xl font-medium">{post.title}</h1>
                     {/* Post Pic */}
                     <div>
-                      <img src={post.imageUrl} className="bg-contain" />
+                      <img src={post.imageUrl} className="mx-auto" />
                     </div>
                     {/* Post body */}
                     <p className="my-3 text-sm whitespace-pre-line ">
